@@ -1,0 +1,139 @@
+alias weather=" bash ~/code/project/bash-weather/bash-weather.sh"
+alias ll="ls -a"
+
+scheme() {
+    sh /home/anon/Scripts/wp.sh
+#    N=1
+#    dir="/home/anon/Pictures/select/"
+#    background="*background: #383838"
+#    foreground="*foreground: #d3d3d3"
+#    ls $dir | sort -R |tail -$N | while read file; do
+#    feh --bg-scale $dir$file
+#    schemer2 -format img::xterm -in $dir$file > ~/.Xresources
+#    echo $background >> ~/.Xresources
+#    echo $foreground >> ~/.Xresources
+#    xrdb ~/.Xresources
+#    cd /home/anon
+    
+# done
+}
+
+
+wp() {
+    cd ~/code/fun/schemer2/
+    ./schemer2 -format img::xterm -in "$dir$1" > ~/.Xresources
+    xrdb -merge ~/.Xresources
+}
+
+fnd() {
+	if [ -z "$1" ] ; then
+		echo "File name:"
+	else
+		find . 2>/dev/null -type f -iname '*'"$1"'*' ;
+	fi
+}
+
+aur() {
+
+tar -zxvf $1
+cd ${1/.tar.gz/ }
+makepkg -s
+cd ..
+sudo pacman -U *.tar.xz
+echo "==> Install from AUR package complete :]"
+}
+
+ccc() {
+    if [ -z $1 ] ; then
+         echo "No arguments given dumbass!"
+    else
+         NAME=$1
+         # create the cpp file
+         touch $1.cpp
+	 echo "//////////////////////////
+// Filename: $1.cpp
+// Author: Martin Almaraz
+// Date: $(date)
+//////////////////////////
+
+#include <$2>
+#include <$3>
+#include <cstdlib>
+using namespace std;
+
+int main()
+{
+
+	return EXIT_SUCCESS;
+}
+" > $1.cpp
+vim $1.cpp
+fi
+}
+
+cpc() {
+    if [ -z $1 ] ; then
+        echo "No arguments given dumbass!"
+    else
+        UPPER=${1^^}
+        TAIL=_H
+        HEADER=$SUPER$TAIL
+	
+        
+        # Create header file
+        touch $1.h
+        echo "//////////////////////////
+// Filename: $1.h
+// Author: Martin Almaraz
+// Date: $(date)
+//////////////////////////
+
+#ifndef "${1^^}"$HEADER
+#define "${1^^}"$HEADER
+
+using namespace std;
+
+class $1
+{
+    private:
+    public:
+        $1();
+};
+
+#endif" > $1.h
+    # Create Implementation file
+    touch $1.cpp
+    echo "//////////////////////////
+// Filename: $1.cpp
+// Author: Martin Almaraz
+// Date: $(date)
+//////////////////////////
+
+
+#include \"$1.h\"
+using namespace std;
+
+$1::$1()
+{
+
+}" > $1.cpp
+
+    touch $1_driver.cpp
+    echo "//////////////////////////
+// Filename: $1.cpp
+// Author: Martin Almaraz
+// Date: $(date)
+//////////////////////////
+
+#include \"$1.h\"
+#include <cstdlib>
+
+using namespace std;
+
+int main()
+{
+
+    return EXIT_SUCCESS;
+}" > $1_driver.cpp
+fi
+}
